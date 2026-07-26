@@ -1,32 +1,37 @@
-# React + TypeScript + Vite
+# Betwin-fronted
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Frontend di **betwin** (SPA statica sopra la REST API del backend): Vite + React 19
+(TypeScript) + Tailwind 4 + shadcn/ui, dati via TanStack Query su **tipi generati dal
+contratto OpenAPI** del backend.
 
-Currently, two official plugins are available:
+Il backend, la wiki di progetto (`BetwinWiki/`) e il piano vivono nel repo
+[`CalosVu/betwin`](https://github.com/CalosVu/betwin): questo repo contiene solo il FE.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Setup
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev          # dev server su :5173 con proxy /api → localhost:8080 (backend acceso)
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Comandi
+
+| Comando | Cosa fa |
+|---|---|
+| `npm run dev` | Dev server con proxy verso il backend |
+| `npm test` | Unit/component test (Vitest + React Testing Library) |
+| `npm run build` | Build statica di produzione in `dist/` |
+| `npm run genera-tipi` | Rigenera `src/api/schema.d.ts` dal contratto OpenAPI (backend acceso su :8080) |
+| `npx playwright install` | Una tantum: scarica i browser per l'e2e |
+| `npx playwright test` | E2E (avvia da solo il dev server) |
+
+## Struttura
+
+- `src/pagine/` — le cinque viste: Partite, Dettaglio (due analisti affiancati con
+  disaccordi evidenziati), Proposte + carrello schedina, Schedine, Pannello.
+- `src/lib/` — logica pura testata (carrello, disaccordi modello↔AI).
+- `src/api/` — client tipato (`openapi-fetch`) e tipi generati.
+- `e2e/` — test Playwright.
+
+La documentazione funzionale completa è nella wiki del repo backend
+(`BetwinWiki/Sezioni/Frontend.md`).
