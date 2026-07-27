@@ -8,6 +8,7 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import { trovaDisaccordi } from "@/lib/disaccordi";
+import { etichettaMercato } from "@/lib/mercati";
 import type { OrientamentoAi } from "@/lib/disaccordi";
 import { useCarrello } from "../carrello";
 
@@ -101,8 +102,8 @@ export default function DettaglioPartita() {
                   {previsioni.map((previsione) => (
                     <TableRow key={previsione.mercatoId}>
                       <TableCell>
-                        {previsione.tipoMercato} {previsione.selezione}
-                        {previsione.linea != null && ` ${previsione.linea}`}
+                        {etichettaMercato(previsione.ambito, previsione.tipoMercato,
+                          previsione.selezione, previsione.linea)}
                         {previsione.datiMancanti && (
                           <span className="text-muted-foreground block text-xs">
                             {previsione.datiMancanti}
@@ -127,9 +128,8 @@ export default function DettaglioPartita() {
                               mercatoId: previsione.mercatoId!,
                               partita: `${partita.casa} – ${partita.trasferta}`,
                               kickoff: partita.kickoff!,
-                              mercato: `${previsione.tipoMercato} ${previsione.selezione}${
-                                previsione.linea != null ? ` ${previsione.linea}` : ""
-                              }`,
+                              mercato: etichettaMercato(previsione.ambito,
+                                previsione.tipoMercato, previsione.selezione, previsione.linea),
                               probabilita: previsione.probabilita!,
                               confidenza: previsione.confidenza!,
                             })

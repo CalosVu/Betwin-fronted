@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
+import { etichettaMercato } from "@/lib/mercati";
 import { probabilitaComposta, quotaComposta, stessaPartita } from "@/lib/schedina";
 import { useCarrello } from "../carrello";
 
@@ -94,8 +95,8 @@ export default function Proposte() {
                     </span>
                   </TableCell>
                   <TableCell>
-                    {proposta.tipoMercato} {proposta.selezione}
-                    {proposta.linea != null && ` ${proposta.linea}`}
+                    {etichettaMercato(proposta.ambito, proposta.tipoMercato,
+                      proposta.selezione, proposta.linea)}
                   </TableCell>
                   <TableCell className="text-right font-mono">
                     {(proposta.probabilita! * 100).toFixed(1)}%
@@ -109,9 +110,8 @@ export default function Proposte() {
                           mercatoId: proposta.mercatoId!,
                           partita: `${proposta.casa} – ${proposta.trasferta}`,
                           kickoff: proposta.kickoff!,
-                          mercato: `${proposta.tipoMercato} ${proposta.selezione}${
-                            proposta.linea != null ? ` ${proposta.linea}` : ""
-                          }`,
+                          mercato: etichettaMercato(proposta.ambito, proposta.tipoMercato,
+                            proposta.selezione, proposta.linea),
                           probabilita: proposta.probabilita!,
                           confidenza: proposta.confidenza!,
                         })

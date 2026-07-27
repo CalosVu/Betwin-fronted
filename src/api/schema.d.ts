@@ -279,6 +279,7 @@ export interface components {
             trasferta?: string;
             /** Format: int64 */
             mercatoId?: number;
+            ambito?: string;
             tipoMercato?: string;
             selezione?: string;
             linea?: number;
@@ -313,6 +314,7 @@ export interface components {
         VocePrevisione: {
             /** Format: int64 */
             mercatoId?: number;
+            ambito?: string;
             tipoMercato?: string;
             selezione?: string;
             linea?: number;
